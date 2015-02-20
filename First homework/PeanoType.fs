@@ -1,3 +1,7 @@
+/*Howework 1
+Realisation of peano numbers
+By Sharganov Artem
+*/
 type peano = Zero|S of peano
 
 let rec plus a b = 
