@@ -1,7 +1,7 @@
-/*Howework 1
-Realisation of peano numbers
-By Sharganov Artem
-*/
+//Howework 1
+//Realisation of peano numbers
+//By Sharganov Artem
+
 type peano = Zero|S of peano
 
 let rec plus a b = 
@@ -36,4 +36,4 @@ let rec ToInt a =
 [<EntryPoint>]
 let main argv =
   printf "%A\n"(pow(S(S(Zero))) (S(S(S(Zero)))))
-  0 // âîçâđŕůĺíčĺ öĺëî÷čńëĺííîăî ęîäŕ âűőîäŕ
+  0 
