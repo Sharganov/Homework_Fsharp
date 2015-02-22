@@ -27,9 +27,9 @@ let rec delete number tree =
     else if number < c then Node(c, delete number l, r)
     else 
       match l, r with
-      |Empty, Empty -> Empty
-      |Empty, Node(c'', l'', r'')->Node(c'', l'', r'')
+      |Empty, Empty -> Empty 
       |Node(c', l', r'), Empty -> Node(c', l', r')
+      |Empty, Node(c'', l'', r'')->Node(c'', l'', r'')
       |l, Node(c'',Empty, r'')->Node(c'', l, r'')
       |l, Node(c'', l'', r'')-> Node(LastLeft l'', l, delete (LastLeft l'') (Node(c'', l'', r'')))
 
