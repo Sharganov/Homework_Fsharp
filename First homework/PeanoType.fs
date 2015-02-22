@@ -19,13 +19,13 @@ let rec mult a b =
   match a, b with  
   |Zero, _ -> Zero
   |_, Zero -> Zero
-  |S a, S b -> plus (mult (S a) b) (S a)
+  | a, S b -> plus (mult a b) a
 
 let rec pow a b = 
   match a, b with 
   |a, Zero -> S Zero
   |Zero, _ -> Zero
-  |S a, S b ->mult(pow (S a) b) (S a)
+  |a, S b ->mult(pow a b) a
   
 let rec ToInt a = 
  match a with 
