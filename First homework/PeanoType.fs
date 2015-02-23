@@ -1,6 +1,8 @@
 //Howework 1
 //Realisation of peano numbers
 //By Sharganov Artem
+//Оценочное время: 30 минут
+//Итоговое время:  30 - 40 минут в общем, а так затянулось на два вечера :)
 
 type peano = Zero|S of peano
 
