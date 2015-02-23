@@ -1,4 +1,6 @@
 //By Sharganov Artem
+//Предполагаемое время написания: 3-4 часа (1 вечер)
+//Итоговое время:3 часа(вместе с чтнеием литературы)
 
 type BinaryTree =
   | Empty
@@ -61,5 +63,15 @@ let rec printCLR tree =
  
 [<EntryPoint>]
 let main argv =
-  printfn "%A" argv
-  0 // возвращение целочисленного кода выхода
+  let tree = Node(2, Empty, Empty)
+  let tree2 = insert 5 tree
+  let tree3 = insert -1 tree2
+  let tree4 = delete 2 tree3
+  let tree5 = insert 5 (insert 8 (insert 17 tree4))
+  printLCR tree5
+  printf "\n"  
+  printLRC tree5
+  printf "\n"
+  printCLR tree5
+  0 
+ 
