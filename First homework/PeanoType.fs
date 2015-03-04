@@ -8,13 +8,13 @@ type peano = Zero|S of peano
 
 let rec plus a b = 
   match a with
-  |Zero->b 
+  |Zero -> b 
   |S a -> S(plus a b) 
 
 let rec minus a b = 
   match a, b with 
   |Zero, _ -> Zero
-  |a, Zero ->a
+  |_, Zero -> a
   |S a, S b ->  minus a b
   
 let rec mult a b =  
@@ -27,7 +27,7 @@ let rec pow a b =
   match a, b with 
   |a, Zero -> S Zero
   |Zero, _ -> Zero
-  |a, S b ->mult(pow a b) a
+  |a, S b -> mult(pow a b) a
   
 let rec ToInt a = 
  match a with 
