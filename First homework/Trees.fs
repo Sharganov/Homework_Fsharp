@@ -8,32 +8,33 @@ type BinaryTree =
 
 
 let rec insert number tree = 
-  match number, tree with 
-  |number, Empty -> Node(number, Empty, Empty)
-  |number, Node(c, l, r) -> 
-    if number = c then  Node(number, l, r)
-    else if number < c then Node(c, insert number l, r)
-    else Node(c, l, insert number r)
+  match tree with 
+  | Empty -> Node(number, Empty, Empty)
+  | Node(c, l, r) -> 
+    match compare number c with
+    | res when res < 0 -> Node (c, insert number l, r)
+    | res when res > 0 -> Node (c, l, insert number r)
+    |_ -> tree
 
-let rec lastleft tree = 
+let rec lastl tree = 
   match tree with 
     |Empty-> 0
     |Node(c, Empty, _)-> c
-    |Node(c, l, _)-> lastleft l
+    |Node(c, l, _)-> lastl l
 
 let rec delete number tree = 
   match number, tree with
   |_, Empty -> Empty
-  |number, Node(c, l, r) -> 
-    if number > c then Node(c, l, delete number r)
-    else if number < c then Node(c, delete number l, r)
-    else 
+  |number, Node(c, l, r) ->
+    match compare number c with
+    |res > 0 -> Node (c, l ,delete number r)
+    |res < 0 -> Node (c, delete number l, r)
+    |_ ->
       match l, r with
-      |Empty, Empty -> Empty
-      |Empty, Node(c'', l'', r'')->Node(c'', l'', r'')
-      |Node(c', l', r'), Empty -> Node(c', l', r')
-      |l, Node(c'',Empty, r'')->Node(c'', l, r'')
-      |l, Node(c'', l'', r'')-> Node(lastleft l'', l, delete (lastleft l'') (Node(c'', l'', r'')))
+      |Empty, _ -> _
+      |_, Empty -> _
+      |l, Node(c',Empty, r')->Node(c', l, r')
+      |l, Node(c', l', r')-> Node(lastl l', l, delete (lastl l') (Node(c', l', r')))
 
 let rec printLCR tree = 
   match tree with
