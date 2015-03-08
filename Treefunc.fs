@@ -4,16 +4,59 @@
 
 type BinaryTree<'A> =  
   |Empty
-  |Node of ('A) * BinaryTree<'A> * BinaryTree<'A>
+  |Node of 'A * BinaryTree<'A> * BinaryTree<'A>
 
-type Option<'A> = None | Some of 'A
+let rec lastl tree = 
+  match tree with 
+    |Empty-> 0
+    |Node(c, Empty, _)-> c
+    |Node(c, l, _)-> lastl l
+
+let rec delete number tree = 
+  match number, tree with
+  |_, Empty -> Empty
+  |number, Node(c, l, r) ->
+    match compare number c with
+    |res when res > 0 -> Node (c, l ,delete number r)
+    |res when res < 0 -> Node (c, delete number l, r)
+    |_ ->
+      match l, r with
+      |Empty, tree -> tree
+      |tree, Empty -> tree
+      |l, Node(c',Empty, r')->Node(c', l, r')
+      |l, Node(c', l', r')-> 
+        let n = lastl l'
+        Node(n, l, delete n (Node(c', l', r')))
+
+let rec printLCR tree = 
+  match tree with
+  |Empty -> ()
+  |Node(c, l, r) -> 
+    printLCR l
+    printf "%A" c
+    printLCR r
+ 
+let rec printLRC tree = 
+  match tree with
+  |Empty -> printf ""
+  |Node(c, l, r) -> 
+    printLRC l
+    printLRC r
+    printf "%A " c
+  
+let rec printCLR tree = 
+  match tree with
+  |Empty -> printf ""
+  |Node(c, l, r) -> 
+    printf "%A" c
+    printCLR l
+    printCLR r
 
 let rec Treemap f t =
   match t with
   | Empty -> Empty
   | Node(c, l, r) -> Node (f c, Treemap f l, Treemap f r)
 
- 
 let rec fold f acc t =
   match t with 
   |Empty -> acc      
