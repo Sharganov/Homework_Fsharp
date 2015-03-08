@@ -1,19 +1,16 @@
 //Standart functions for list
 //Made by Sharganov Atrem
-//Предполагаемое время: 1 вечер
-//Получилось: 1 вечер
+//Предполагаемое время: 1 час
+//Получилось: 2 - 3 часа
 
 let reverseList list = 
   List.fold (fun acc i -> i::acc) [] list
 
 let map f list = 
-  reverseList (List.fold (fun acc i -> f i::acc) [] list)
+  List.foldBack (fun i acc -> f i::acc) list []
 
 let filter f list = 
-  reverseList( List.fold (fun acc i ->  if (f i) then i::acc else acc) [] list)
-
-let horner value cof = 
-  List.fold (fun x acc -> acc + x*value) 0 cof
+  List.foldBack (fun i acc ->  if (f i) then i::acc else acc) list []
 
 [<EntryPoint>]
 let main argv =
