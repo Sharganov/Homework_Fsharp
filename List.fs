@@ -164,15 +164,15 @@ type ArrayList<'A> (a: 'A [])  =
         |_ -> ArrayList<'A>(Array.sub array 0 (size - 1)) :> SList<'A>
            
         
-      member s.DeleteBy number = 
+       member s.DeleteBy number = 
         if(number < 0) || (number > size) then
           failwith "Wrong index"
         else 
           match size with
           | 0 -> (s :> SList<'A>)
           |_ ->
-            ArrayList<'A>(Array.append (Array.sub array 0 (number - 1))
-                            (Array.sub array (number + 1) (size - number + 1))) :> SList<'A> 
+            ArrayList<'A>(Array.append (Array.sub array 0 (number))
+                            (Array.sub array (number + 1) (size - number - 1))) :> SList<'A> 
      
       member s.Search f = 
         Array.tryFind f array
