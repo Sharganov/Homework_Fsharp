@@ -5,32 +5,32 @@ type Node<'A> =
 type SList<'A> = 
   interface
     abstract Size: int
-    abstract Getval: Option<'A> 
-    abstract InsertHead: 'A -> SList<'A>
-    abstract InsertTail: 'A -> SList<'A>
-    abstract InsertIn:   'A -> int -> SList<'A>
-    abstract DeleteHead: unit -> SList<'A>
-    abstract DeleteTail: unit -> SList<'A> 
-    abstract DeleteBy:   int-> SList<'A>
+    abstract Getval:     Option<'A> 
+    abstract InsertHead: 'A -> unit
+    abstract InsertTail: 'A -> unit
+    abstract InsertIn:   'A ->int-> unit
+    abstract DeleteHead: unit -> unit
+    abstract DeleteTail: unit -> unit
+    abstract DeleteBy:   int-> unit
     abstract Search:     ('A->bool) -> Option<'A>
-    abstract Unit: SList<'A> -> SList<'A>
+    abstract concat:     SList<'A> -> unit
+    abstract Print:      unit -> unit
   end
 
-type AdtList<'A> (head : Node<'A>) = 
-  class  
-    new(value) = AdtList(Cons(value, Empty)) 
-    
-     member s.Size2 =
+type AdtList<'A> () = 
+  class 
+    let mutable list = Empty
+    member s.Size2 =
         let rec count node =
           match node with 
           |Empty -> 0
           |Cons(value, next) -> 1 + count next
-        count head
+        count list
 
     interface SList<'A> with
       
       member s.Getval =
-        match head with
+        match list with
         |Empty -> None
         |Cons(v, _) -> Some v
     
@@ -39,21 +39,21 @@ type AdtList<'A> (head : Node<'A>) =
            match node with 
            |Empty -> 0
            |Cons(value, next) -> 1 + count next
-         count head
+         count list
 
       member s.InsertHead value =
-        new AdtList<'A> (Cons(value, head)) :> SList<'A>  
-       
+        list<-(Cons(value, list))
+          
       member s.InsertTail value = 
         let rec insert value node = 
           match node with
           |Empty -> Cons(value, Empty)
           |Cons(v, next) -> Cons(v, insert value next)
-        AdtList<'A>(insert value head) :> SList<'A>
-    
+        list<- insert value list
+      
       member s.InsertIn v number =
         if (number < 0) || (number >= s.Size2) then
-          failwith "Wrong index!"
+          failwith "Wrong index"
         else
           let rec insert node v index =
             match node with
@@ -62,29 +62,29 @@ type AdtList<'A> (head : Node<'A>) =
               match compare index number with
               | c when c < 0 -> Cons(vl, insert next v (index + 1))
               | _ -> Cons(v, node)
-          AdtList<'A>(insert head v 0 ):> SList<'A>  
+          list <- insert list v 0
     
-      member s.DeleteHead ()= 
-        match head with 
-        |Empty->s :> SList<'A>
-        |Cons(value, next) -> 
-           AdtList<'A>(next) :> SList<'A>
-      
+      member s.DeleteHead () = 
+        
+        match list with 
+        |Empty-> failwith "List is empty"
+        |Cons(value, next) -> list<-next
+              
       member s.DeleteTail ()= 
         let rec delete node = 
           match node with 
-          |Empty -> Empty
+          |Empty -> failwith "List is empty"
           |Cons(value, Cons(value', Empty))-> Cons(value, Empty)
           |Cons(value, next) -> Cons(value, delete next)
-        AdtList<'A>(delete head):>SList<'A>
+        list <- delete list
       
-      member s.DeleteBy number=  
-        if (number> s.Size2 - 1) || (number < 0)
-        then failwith "Wrong Index"
-        if (number = 0) then 
-          (s :> SList<'A>).DeleteHead()
+      member s.DeleteBy number =  
+        if (number> s.Size2 - 1) || (number < 0)then  
+          failwith "Wrong index"
+        elif (number = 0) then 
+          (s:>SList<'A>).DeleteHead()
         elif (number = s.Size2 - 1) then
-          (s :> SList<'A>).DeleteTail()
+          (s :> SList<'A>).DeleteTail() 
         else
           let rec delete n node =
             match node with 
@@ -94,7 +94,7 @@ type AdtList<'A> (head : Node<'A>) =
               else 
                 Cons(value, delete  (n + 1) next)
             |_ -> Empty
-          AdtList<'A>( delete 0 head):> SList<'A>
+          list <- delete 0 list
     
       member s.Search f = 
         let rec find node = 
@@ -102,136 +102,175 @@ type AdtList<'A> (head : Node<'A>) =
           |Empty -> None
           |Cons(value, next) -> if f value then Some(value)
                                  else find next
-        find head
-      member s.Unit l=
+        find list
+      member s.concat l=
+        
         let rec trans (l : SList<'A>) =
           match l.Size with
           |0 -> Empty
-          |_ -> Cons(l.Getval.Value, trans(l.DeleteHead()))
+          |_ -> 
+            let n = l.Getval.Value
+            l.DeleteHead()
+            Cons(n, trans l)
+
         let rec zip list1 list2 =
           match list1 with 
           |Empty -> list2
           |Cons(value, next) -> Cons(value, zip next list2)
-        AdtList<'A>( zip head (trans l)):> SList<'A>
+        list<-zip list (trans l)
     
+      member s.Print() = 
+        printf "["
+        let rec printl list =
+          match list with
+          |Empty -> printf ""
+          |Cons(v, next) -> (printl next)
+                            printf "%A;" v
+        printl list
+        printf "]\n"
     override s.ToString() =
       let rec itos n =
         match n with
         | Empty -> "]"
         | Cons(vl, Empty) -> vl.ToString() + " ]"
         | Cons(vl, nxt) -> vl.ToString() + "; " + (itos nxt)
-      "[ " + (itos head)
-   end
+      "[ " + (itos list)
+             
+   end 
 
 
 
 
-type ArrayList<'A> (a: 'A [])  = 
+type ArrayList<'A>()  = 
   class
-    let array = a
-    let size = a.Length
-    new() = ArrayList<'A>(Array.empty<'A>)
-    new(value : 'A)= ArrayList<'A>(Array.create 1 value)
-
+    let mutable list = [||]
     interface SList<'A> with 
-
-      member s.Size = size
-     
+      member s.Size = list.Length
       member s.Getval = 
-        match array with
+        match list with
         | [||] -> None
-        | _ -> Some array.[0]
+        | _ -> Some list.[0]
 
       member s.InsertTail value = 
-        ArrayList<'A>(Array.append array (Array.create 1 value)) :> SList<'A>
+        list <- Array.append list (Array.create 1 value)
       
       member s.InsertHead value = 
-        ArrayList<'A>(Array.append (Array.create 1 value) array) :> SList<'A>
+       list<- Array.append (Array.create 1 value) list
       
       member s.InsertIn value number = 
-        let arr = Array.append (Array.append (Array.sub array 0 number) (Array.create 1 value))
-                    (Array.sub array number (size - number + 1))
-        ArrayList<'A>(arr) :>  SList<'A>
-      
+        if(number < 0) || (number > list.Length) then
+          failwith "Wrong index"
+        else 
+          list <- Array.append (Array.append (Array.sub list 0 number) (Array.create 1 value))
+                      (Array.sub list number (list.Length - number))
+           
       member s.DeleteHead () = 
+        let size = list.Length
         match size with
-        |0 -> (s :> SList<'A>) 
-        |_ -> ArrayList<'A>(Array.sub array 1 (size - 1)) :> SList<'A>
+        |0 -> failwith "List is empty"
+        |_ -> list <- Array.sub list 1 (size - 1)
       
       member s.DeleteTail () = 
+        let size = list.Length
         match size with
-        |0 -> (s :> SList<'A>)
-        |_ -> ArrayList<'A>(Array.sub array 0 (size - 1)) :> SList<'A>
-           
+        |0 -> failwith "List is empty"
+        |_ -> list <- Array.sub list 0 (size - 1)           
         
-       member s.DeleteBy number = 
+      member s.DeleteBy number = 
+        let size = list.Length
         if(number < 0) || (number > size) then
           failwith "Wrong index"
         else 
           match size with
-          | 0 -> (s :> SList<'A>)
-          |_ ->
-            ArrayList<'A>(Array.append (Array.sub array 0 (number))
-                            (Array.sub array (number + 1) (size - number - 1))) :> SList<'A> 
+          | 0 -> failwith "List empty"
+          |_ -> list <- Array.append (Array.sub list 0 (number))
+                          (Array.sub list (number + 1) (size - number - 1)) 
      
       member s.Search f = 
-        Array.tryFind f array
+        Array.tryFind f list
       
-      member s.Unit array2 =
+      member s.concat array2 =
         let rec trans (array2:SList<'A>) = 
+          let arr = [||]
           match array2.Size with 
-          |0 -> [||]
-          |_ -> Array.append ( Array.create 1 array2.Getval.Value)
-                 (trans (array2.DeleteHead()))
-        ArrayList<'A>(Array.append  array (trans array2)):>SList<'A>
+          |0 -> list
+          |_ -> 
+             let v = array2.Getval.Value
+             array2.DeleteHead()
+             Array.append  (trans array2) (Array.create 1 v)
+        list <- trans array2
         
-       
+      member s.Print () = 
+        printfn "%A" list
+    
   end 
-
+ 
 [<EntryPoint>]
 let main argv = 
-  let mutable list1 = AdtList<int>(3) :> SList<int>;
+  let mutable arr = [|12;3;4|]
+  printfn "arr = %A" arr
+  let mutable list1 = AdtList<int>() :> SList<int>;
   printfn "list = %A\n" list1
-  list1 <- list1.InsertHead 7
-  printfn " l1 <- l1.InsertHead 7 = %A\n" list1
-  list1 <- list1.InsertTail 1
+  list1.InsertHead 7 
+  list1.Print() 
+  list1.InsertTail 1 
   printfn "list <- list.InsertTail 1 = %A\n" list1
-  list1 <- list1.InsertIn 2 1
+  list1.InsertIn 2 1 
   printfn "list <- lissy1.InsertIn 2 1 = %A\n" list1
-  list1 <- list1.InsertHead 0
+  list1.InsertHead 0
   printfn "list <- list.InsertHead 0 = %A\n" list1
-  list1 <- list1.DeleteHead()
+  list1.DeleteHead()
   printfn "list = list.DeleteHead() = %A\n" list1
-  list1 <- list1.DeleteTail()
+  list1.DeleteTail()
   printfn "list <- list.DeleteTail() = %A\n" list1
-  list1 <- list1.DeleteBy 1
+  list1.DeleteBy 1
   printfn "list <- list.DeleteBy 1 = %A\n" list1
-  let mutable list2 = list1.InsertHead 2 
+  list1.InsertHead 2
+ 
+  let mutable list2 = AdtList<int>() :> SList<int>
+  printf "list2 ="
+  list2.InsertHead 3
   printfn "list2 <- list.InsertHead 2 = %A\n" list2
   printfn "list2.Seach ((=) 3) = %A"  (list2.Search ((=) 3))
-  list1 <- list1.Unit list2
+  list1.concat list2
   printfn "list <- list.Unit list2 = %A\n" list1
   
+ 
   //Реализация с помощью массива
-  let mutable list1 = AdtList<int>(3) :> SList<int>
-  printfn "list = %A\n" list1
-  list1 <- list1.InsertHead 7
-  printfn " l1 <- l1.InsertHead 7 = %A\n" list1
-  list1 <- list1.InsertTail 1
-  printfn "list <- list.InsertTail 1 = %A\n" list1
-  list1 <- list1.InsertIn 2 1
-  printfn "list <- list1.InsertIn 2 1 = %A\n" list1
-  list1 <- list1.InsertHead 0
-  printfn "list <- list.InsertHead 0 = %A\n" list1
-  list1 <- list1.DeleteHead()
-  printfn "list = list.DeleteHead() = %A\n" list1
-  list1 <- list1.DeleteTail()
-  printfn "list <- list.DeleteTail() = %A\n" list1
-  list1 <- list1.DeleteBy 1
-  printfn "list <- list.DeleteBy 1 = %A\n" list1
-  let mutable list2 = list1.InsertHead 2 
-  printfn "list2 <- list.InsertHead 2 = %A\n" list2
+  let mutable list1 = ArrayList<int>() :> SList<int>
+  list1.Print()
+  list1.InsertHead 7
+  printfn " l1 <- l1.InsertHead 7 = \n" 
+  list1.Print()
+  list1.InsertTail 1
+  printfn "list <- list.InsertTail 1 = \n" 
+  list1.Print()
+  list1.InsertIn 2 1
+  printfn "list <- list1.InsertIn 2 1 = \n" 
+  list1.Print()
+  list1.InsertHead 0
+  printfn "list <- list.InsertHead 0 = \n" 
+  list1.Print()
+  list1.DeleteHead()
+  printfn "list = list.DeleteHead() = \n" 
+  list1.Print()
+  list1.DeleteTail()
+  printfn "list <- list.DeleteTail() =\n" 
+  list1.Print()
+  list1.DeleteBy 1
+  printfn "list <- list.DeleteBy 1 = \n" 
+  list1.Print()
+  list1.InsertHead 2
+  printfn "list <-list1.InsertHead 2 ="
+  list1.Print()
+
+  let mutable list2 = ArrayList<int>() :> SList<int>
+  list2.InsertHead 3
+  printfn "list2 <- list.InsertHead 2 = \n" 
+  list2.Print()
   printfn "list2.Seach ((=) 3) = %A"  (list2.Search ((=) 3))
-  list1 <- list1.Unit list2
-  printfn "list <- list.Unit list2 = %A\n " list1
+  list1.concat list2
+  printfn "list <- list.Unit list2 = \n "  
+  list1.Print()
+  
   0 // возвращение целочисленного кода выхода
