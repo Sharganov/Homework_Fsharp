@@ -1,3 +1,7 @@
+//Предполагаемое время: 18 часов
+//Реальное время: 16
+
+
 type IGraph<'A> =
   interface 
     abstract size : int
