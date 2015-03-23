@@ -6,14 +6,14 @@ type SList<'A> =
   interface
     abstract Size: int
     abstract Getval:     Option<'A> 
-    abstract InsertHead: 'A -> unit
-    abstract InsertTail: 'A -> unit
-    abstract InsertIn:   'A ->int-> unit
-    abstract DeleteHead: unit -> unit
-    abstract DeleteTail: unit -> unit
-    abstract DeleteBy:   int-> unit
+    abstract InsertHead: 'A -> bool
+    abstract InsertTail: 'A -> bool
+    abstract InsertIn:   'A ->int-> bool
+    abstract DeleteHead: unit -> bool
+    abstract DeleteTail: unit -> bool
+    abstract DeleteBy:   int-> bool
     abstract Search:     ('A->bool) -> Option<'A>
-    abstract concat:     SList<'A> -> unit
+    abstract concat:     SList<'A> -> bool
     abstract Print:      unit -> unit
   end
 
@@ -42,18 +42,18 @@ type AdtList<'A> () =
          count list
 
       member s.InsertHead value =
-        list<-(Cons(value, list))
+        list<-(Cons(value, list)); true 
           
       member s.InsertTail value = 
         let rec insert value node = 
           match node with
           |Empty -> Cons(value, Empty)
           |Cons(v, next) -> Cons(v, insert value next)
-        list<- insert value list
+        list<- insert value list;true
       
       member s.InsertIn v number =
         if (number < 0) || (number >= s.Size2) then
-          failwith "Wrong index"
+          false
         else
           let rec insert node v index =
             match node with
@@ -62,25 +62,25 @@ type AdtList<'A> () =
               match compare index number with
               | c when c < 0 -> Cons(vl, insert next v (index + 1))
               | _ -> Cons(v, node)
-          list <- insert list v 0
+          list <- insert list v 0; true
     
       member s.DeleteHead () = 
         
         match list with 
-        |Empty-> failwith "List is empty"
-        |Cons(value, next) -> list<-next
+        |Empty-> false
+        |Cons(value, next) -> list<-next; true
               
       member s.DeleteTail ()= 
         let rec delete node = 
           match node with 
-          |Empty -> failwith "List is empty"
+          |Empty -> Empty
           |Cons(value, Cons(value', Empty))-> Cons(value, Empty)
           |Cons(value, next) -> Cons(value, delete next)
-        list <- delete list
+        list <- delete list; true
       
       member s.DeleteBy number =  
         if (number> s.Size2 - 1) || (number < 0)then  
-          failwith "Wrong index"
+          false
         elif (number = 0) then 
           (s:>SList<'A>).DeleteHead()
         elif (number = s.Size2 - 1) then
@@ -94,7 +94,7 @@ type AdtList<'A> () =
               else 
                 Cons(value, delete  (n + 1) next)
             |_ -> Empty
-          list <- delete 0 list
+          list <- delete 0 list; true
     
       member s.Search f = 
         let rec find node = 
@@ -110,14 +110,14 @@ type AdtList<'A> () =
           |0 -> Empty
           |_ -> 
             let n = l.Getval.Value
-            l.DeleteHead()
+            ignore(l.DeleteHead())
             Cons(n, trans l)
 
         let rec zip list1 list2 =
           match list1 with 
           |Empty -> list2
           |Cons(value, next) -> Cons(value, zip next list2)
-        list<-zip list (trans l)
+        list<-zip list (trans l); true
     
       member s.Print() = 
         printf "["
@@ -152,39 +152,39 @@ type ArrayList<'A>()  =
         | _ -> Some list.[0]
 
       member s.InsertTail value = 
-        list <- Array.append list (Array.create 1 value)
+        list <- Array.append list (Array.create 1 value); true
       
       member s.InsertHead value = 
-       list<- Array.append (Array.create 1 value) list
+       list<- Array.append (Array.create 1 value) list; true
       
       member s.InsertIn value number = 
         if(number < 0) || (number > list.Length) then
-          failwith "Wrong index"
+          false
         else 
           list <- Array.append (Array.append (Array.sub list 0 number) (Array.create 1 value))
-                      (Array.sub list number (list.Length - number))
+                      (Array.sub list number (list.Length - number)); true
            
       member s.DeleteHead () = 
         let size = list.Length
         match size with
-        |0 -> failwith "List is empty"
-        |_ -> list <- Array.sub list 1 (size - 1)
+        |0 -> false
+        |_ -> list <- Array.sub list 1 (size - 1); true
       
       member s.DeleteTail () = 
         let size = list.Length
         match size with
-        |0 -> failwith "List is empty"
-        |_ -> list <- Array.sub list 0 (size - 1)           
+        |0 -> false
+        |_ -> list <- Array.sub list 0 (size - 1); true           
         
       member s.DeleteBy number = 
         let size = list.Length
         if(number < 0) || (number > size) then
-          failwith "Wrong index"
+          false
         else 
           match size with
-          | 0 -> failwith "List empty"
+          | 0 -> false
           |_ -> list <- Array.append (Array.sub list 0 (number))
-                          (Array.sub list (number + 1) (size - number - 1)) 
+                          (Array.sub list (number + 1) (size - number - 1)); true
      
       member s.Search f = 
         Array.tryFind f list
@@ -196,9 +196,9 @@ type ArrayList<'A>()  =
           |0 -> list
           |_ -> 
              let v = array2.Getval.Value
-             array2.DeleteHead()
+             ignore(array2.DeleteHead())
              Array.append  (trans array2) (Array.create 1 v)
-        list <- trans array2
+        list <- trans array2; true
         
       member s.Print () = 
         printfn "%A" list
@@ -211,66 +211,65 @@ let main argv =
   printfn "arr = %A" arr
   let mutable list1 = AdtList<int>() :> SList<int>;
   printfn "list = %A\n" list1
-  list1.InsertHead 7 
+  ignore(list1.InsertHead 7) 
   list1.Print() 
-  list1.InsertTail 1 
+  ignore(list1.InsertTail 1) 
   printfn "list <- list.InsertTail 1 = %A\n" list1
-  list1.InsertIn 2 1 
+  ignore(list1.InsertIn 2 1) 
   printfn "list <- lissy1.InsertIn 2 1 = %A\n" list1
-  list1.InsertHead 0
+  ignore(list1.InsertHead 0)
   printfn "list <- list.InsertHead 0 = %A\n" list1
-  list1.DeleteHead()
+  ignore(list1.DeleteHead())
   printfn "list = list.DeleteHead() = %A\n" list1
-  list1.DeleteTail()
+  ignore(list1.DeleteTail())
   printfn "list <- list.DeleteTail() = %A\n" list1
-  list1.DeleteBy 1
+  ignore(list1.DeleteBy 1)
   printfn "list <- list.DeleteBy 1 = %A\n" list1
-  list1.InsertHead 2
+  ignore(list1.InsertHead 2)
  
   let mutable list2 = AdtList<int>() :> SList<int>
   printf "list2 ="
-  list2.InsertHead 3
+  ignore(list2.InsertHead 3)
   printfn "list2 <- list.InsertHead 2 = %A\n" list2
   printfn "list2.Seach ((=) 3) = %A"  (list2.Search ((=) 3))
-  list1.concat list2
+  ignore(list1.concat list2)
   printfn "list <- list.Unit list2 = %A\n" list1
   
  
   //Реализация с помощью массива
   let mutable list1 = ArrayList<int>() :> SList<int>
   list1.Print()
-  list1.InsertHead 7
+  ignore(list1.InsertHead 7)
   printfn " l1 <- l1.InsertHead 7 = \n" 
   list1.Print()
-  list1.InsertTail 1
+  ignore(list1.InsertTail 1)
   printfn "list <- list.InsertTail 1 = \n" 
   list1.Print()
-  list1.InsertIn 2 1
+  ignore(list1.InsertIn 2 1)
   printfn "list <- list1.InsertIn 2 1 = \n" 
   list1.Print()
-  list1.InsertHead 0
+  ignore(list1.InsertHead 0)
   printfn "list <- list.InsertHead 0 = \n" 
   list1.Print()
-  list1.DeleteHead()
+  ignore(list1.DeleteHead())
   printfn "list = list.DeleteHead() = \n" 
   list1.Print()
-  list1.DeleteTail()
+  ignore(list1.DeleteTail())
   printfn "list <- list.DeleteTail() =\n" 
   list1.Print()
-  list1.DeleteBy 1
+  ignore(list1.DeleteBy 1)
   printfn "list <- list.DeleteBy 1 = \n" 
   list1.Print()
-  list1.InsertHead 2
+  ignore(list1.InsertHead 2)
   printfn "list <-list1.InsertHead 2 ="
   list1.Print()
 
   let mutable list2 = ArrayList<int>() :> SList<int>
-  list2.InsertHead 3
+  ignore(list2.InsertHead 3)
   printfn "list2 <- list.InsertHead 2 = \n" 
-  list2.Print()
+  ignore(list2.Print())
   printfn "list2.Seach ((=) 3) = %A"  (list2.Search ((=) 3))
-  list1.concat list2
+  ignore(list1.concat list2)
   printfn "list <- list.Unit list2 = \n "  
   list1.Print()
-  
   0 // возвращение целочисленного кода выхода
