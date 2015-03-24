@@ -44,12 +44,12 @@ type AdtList<'A> () =
       member s.InsertHead value =
         list<-(Cons(value, list)); true 
           
-      member s.InsertTail value = 
-        let rec insert value node = 
-          match node with
-          |Empty -> Cons(value, Empty)
-          |Cons(v, next) -> Cons(v, insert value next)
-        list<- insert value list;true
+      member s.InsertTail value =        
+         let rec insert value node = 
+           match node with
+           |Empty -> Cons(value, Empty)
+           |Cons(v, next) -> Cons(v, insert value next)
+         list<- insert value list;true
       
       member s.InsertIn v number =
         if (number < 0) || (number >= s.Size2) then
@@ -71,15 +71,19 @@ type AdtList<'A> () =
         |Cons(value, next) -> list<-next; true
               
       member s.DeleteTail ()= 
-        let rec delete node = 
-          match node with 
-          |Empty -> Empty
-          |Cons(value, Cons(value', Empty))-> Cons(value, Empty)
-          |Cons(value, next) -> Cons(value, delete next)
-        list <- delete list; true
+         if s.Size2 = 0 then 
+          false
+         else
+           let rec delete node = 
+             match node with 
+             |Empty -> Empty
+             |Cons(value, Cons(value', Empty))-> Cons(value, Empty)
+             |Cons(value, next) -> Cons(value, delete next)
+           list <- delete list; true
       
       member s.DeleteBy number =  
-        if (number> s.Size2 - 1) || (number < 0)then  
+        if s.Size2 = 0 then false
+        elif (number> s.Size2 - 1) || (number < 0)then  
           false
         elif (number = 0) then 
           (s:>SList<'A>).DeleteHead()
@@ -137,9 +141,6 @@ type AdtList<'A> () =
       "[ " + (itos list)
              
    end 
-
-
-
 
 type ArrayList<'A>()  = 
   class
@@ -204,7 +205,7 @@ type ArrayList<'A>()  =
         printfn "%A" list
     
   end 
- 
+
 [<EntryPoint>]
 let main argv = 
   let mutable arr = [|12;3;4|]
