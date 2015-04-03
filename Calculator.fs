@@ -160,9 +160,6 @@ let smartcalc (str:string) (data : list<string*float>) =
 [<TestCase ("19+(2%4)^2", Result = 23.0)>]
 [<TestCase ("(19+18*(2+6)/3^2)%4", Result = 3.0)>]
 [<TestCase ("(3+4)^2 - (5 - 7)^3", Result = 57.0)>]
-let test value = 
-  smartcalc value []
-
 [<TestCase ("2^x^y^2", Result = 0.0625 )>]
 [<TestCase ("(2*x+5*y)^2", Result = 1)>]
 [<TestCase ( "((-2*x)*(-4))^4 - number^3", Result = 1536)>]
