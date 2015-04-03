@@ -156,43 +156,62 @@ type Net(net : IlabledGraph<Computer>) =
       match System.Console.ReadKey().Key with | _ -> ()
           
   end
-
-[<Test>]
-let ``IsReachedFromThis``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4;5;6;7|],
-                 [(0, 1); (1, 2); (2, 3); (2, 4); (3, 4); (1, 5); (1, 6); (5, 7); (4, 5)])
-  Assert.AreEqual ([2;3;4;5;6;7], IsReachedFrom graph 1)
-
-[<Test>]
-let ``IsReachedFromThis2 ``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4;5;6;7|],  [])
-  Assert.AreEqual ([], IsReachedFrom graph 1)
-
-[<Test>]
-let ``IsReachedFromThis1 ``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4|],
-                 [(0,1);(0,2);(0,3);(0,4);(1,0);(1,1);(1,2);(1,3);(1,4);(2,0);(2,1);(2,2);(2,3);
-                   (2,4);(3,0);(3,1);(3,2);(3,3);(3,4);(4,0);(4,1);(4,2);(4,3)])
-  Assert.AreEqual ([0;2;3;4], IsReachedFrom graph 1)
-
-[<Test>]
-let ``IsReachedForThis``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4;5;6;7|],
-                 [(0, 1); (1, 2); (2, 3); (2, 4); (3, 4); (1, 5); (1, 6); (5, 7); (4, 5)])
-  Assert.AreEqual ([0;1;2;3], IsReachedFor graph 4)
-
-[<Test>]
-let ``IsReachedForThis2 ``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4;5;6;7|],
-                 [])
-  Assert.AreEqual ([], IsReachedFor graph 1)
-
-[<Test>]
-let ``IsReachedForThis1 ``() = 
-  let graph = new MatrIGraph<int> ([|0;1;2;3;4|],
-                 [(0,1);(0,2);(0,3);(0,4);(1,0);(1,1);(1,2);(1,3);(1,4);(2,0);(2,1);(2,2);(2,3);
-                   (2,4);(3,0);(3,1);(3,2);(3,3);(3,4);(4,0);(4,1);(4,2);(4,3)])
-  Assert.AreEqual ([0;2;3;4], IsReachedFor graph 1)
+[<TestFixture>]
+type GraphTest () = 
+  let edges =  [(0, 1); (1, 2); (2, 3); (2, 4); (3, 4); (1, 5); (1, 6); (5, 7); (4, 5)]
+  let edges' = [(0,1);(0,2);(0,3);(0,4);(1,0);(1,1);(1,2);(1,3);(1,4);(2,0);(2,1);(2,2);(2,3);
+                   (2,4);(3,0);(3,1);(3,2);(3,3);(3,4);(4,0);(4,1);(4,2);(4,3)]
+  let newMatrGraph edge = new MatrIGraph<int> ([|0;1;2;3;4;5;6;7|], edge)
+  let newListGraph edge = new ListIGraph<int> ([|0;1;2;3;4;5;6;7|], edge)
+  
+  [<Test>]
+  member s.``Is Reached From (matrix)``() = 
+    let graph = newMatrGraph edges
+    Assert.AreEqual ([2;3;4;5;6;7], IsReachedFrom graph 1)
+  [<Test>]
+  member s.``Is Reached From (list)`` () = 
+    let graph =  newListGraph edges
+    Assert.AreEqual ([2;3;4;5;6;7], IsReachedFrom graph 1)
+  [<Test>]
+  member s.``Is Reached From (matrix, full)``() = 
+    let graph = newMatrGraph edges'
+    Assert.AreEqual ([0;2;3;4], IsReachedFrom graph 1)
+  [<Test>]
+  member s.``Is Reached From (list, full)``() = 
+    let graph = newListGraph edges'
+    Assert.AreEqual ([0;2;3;4], IsReachedFrom graph 1)
+  [<Test>]
+  member s.``Is Reached From (matrix, empty)``() = 
+    let graph = newMatrGraph []
+    Assert.AreEqual ([], IsReachedFrom graph 1)
+  [<Test>]
+  member s.``Is Reached From (list, empty)``() =
+    let graph = newListGraph []
+    Assert.AreEqual ([], IsReachedFrom graph 1) 
+  [<Test>]
+  member s.``Is Reached For (matrix) ``() = 
+    let graph = newMatrGraph edges
+    Assert.AreEqual ([0;1;2;3], IsReachedFor graph 4)
+  [<Test>]
+  member s.``Is Reached For (list) ``() = 
+    let graph = newListGraph edges
+    Assert.AreEqual ([0;1;2;3], IsReachedFor graph 4)
+  [<Test>]
+  member s.``Is Reached For (matrix, empty) ``() = 
+    let graph = newMatrGraph []
+    Assert.AreEqual ([], IsReachedFor graph 1)
+  [<Test>]
+  member s.``Is Reached For (list, empty) ``() = 
+    let graph = newListGraph []
+    Assert.AreEqual ([], IsReachedFor graph 1)
+  [<Test>]
+  member s.``Is Reached For (matrix, full)``() = 
+    let graph = newMatrGraph edges'
+    Assert.AreEqual ([0;2;3;4], IsReachedFor graph 1)
+  [<Test>]
+  member s.``Is Reached For (list, full)``() = 
+    let graph = newListGraph edges'
+    Assert.AreEqual ([0;2;3;4], IsReachedFor graph 1)
 
 
 let OSList = 
