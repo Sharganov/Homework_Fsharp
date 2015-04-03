@@ -9,9 +9,9 @@ let pr x =
   |'*' -> 3
   |'^' -> 4 
   |'%' -> 3 
-  |x ->  match (System.Char.IsLetter x) with
-         |true  -> 0
-         |false -> -1
+  |x ->  match System.Char.IsLetter x with
+        |res when res = true -> 0
+        |_ -> - 1
  
 
 type Stack<'A> = 
