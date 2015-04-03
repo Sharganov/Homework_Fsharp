@@ -8,28 +8,26 @@ let pr x =
   |'/' -> 3
   |'*' -> 3
   |'^' -> 4 
-  |'%' -> 3 // взятие остатка
-  |x -> if (System.Char.IsLetter x) then
-          0
-        else -1 
+  |'%' -> 3 
+  |x ->  match (System.Char.IsLetter x) with
+         |true  -> 0
+         |false -> -1
+ 
 
 type Stack<'A> = 
   interface
     abstract deletetop: unit -> bool
-    abstract push : 'A -> bool // sbstract метод без реализации
+    abstract push : 'A -> bool 
     abstract pop  : unit -> Option<'A>
     abstract isEmpty : unit -> bool
     abstract size : unit -> int
     abstract top  : unit -> Option<'A>
-    abstract print : unit -> unit  
   end
 
 type ListStack<'A> () = 
   class
     let mutable list = []
     interface Stack<'A> with 
-      member s.print () =
-        printfn "%A" list
       member s.deletetop () = 
         if list.Length = 0 then false
         else list <- list.Tail; true
@@ -152,43 +150,27 @@ let smartcalc (str:string) (data : list<string*float>) =
         
    i<-i+1
    lenght<-lenght - 1
-   stack.print()
   stack.top().Value
 
-[<Test>]
-let test01 () =
-  Assert.AreEqual(31.0,  smartcalc "3+7*(1-5)^2^3/1024" [])
-  
+[<TestCase ("2*2+2", Result = 6.0)>]
+[<TestCase ("3-(-2)", Result = 5.0)>]
+[<TestCase ("(17/34)^5*32", Result = 1.0)>]
+[<TestCase ("12/(2*3)", Result = 2)>]
+[<TestCase ("3+7*(1-5)^2^3/1024", Result = 31.0)>]
+[<TestCase ("19+(2%4)^2", Result = 23.0)>]
+[<TestCase ("(19+18*(2+6)/3^2)%4", Result = 3.0)>]
+[<TestCase ("(3+4)^2 - (5 - 7)^3", Result = 57.0)>]
+let test value = 
+  smartcalc value []
 
-[<Test>]
-let test02 () =
-  smartcalc "19+(2%4)^2" [] 
-  |> should equal 23
-
-[<Test>]
-let test03 () = 
-  smartcalc "(19+18*(2+6)/3^2)%4" []   
-  |> should equal 3
-[<Test>]
-let test04 () =
-  smartcalc "(3+4)^2 - (5 - 7)^3" []   
-  |> should equal 57
-[<Test>]
-let test05 () = 
-  smartcalc "(2*x+5*y)^2" [("x", 2.0);("y", -1.0)]
-  |> should equal 1
-  
-[<Test>]
-let test06 () =
-  smartcalc "((-x)*(-4))^4 - number^3"  [("x", -4.0);("number", 40.0)]
-  |> should equal 1536
-[<Test>]
-let test07 () =
-  smartcalc "(17/34)^5*32" []
-  |> should equal 1
-
+[<TestCase ("2^x^y^2", Result = 0.0625 )>]
+[<TestCase ("(2*x+5*y)^2", Result = 1)>]
+[<TestCase ( "((-2*x)*(-4))^4 - number^3", Result = 1536)>]
+[<TestCase ("2^y + x*number%6", Result = 2.5)>]
+let test05 value = 
+  smartcalc value [("x", 2.0);("y", -1.0);("number", 40.0)]
+ 
        
 [<EntryPoint>]
 let main argv = 
-    
     0
