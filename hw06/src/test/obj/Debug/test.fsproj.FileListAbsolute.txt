@@ -1,0 +1,6 @@
+C:\users\николай\desktop\pr\test\test.dll
+C:\users\николай\desktop\pr\test\test.pdb
+C:\users\николай\desktop\pr\test\test.XML
+C:\users\николай\desktop\pr\src\test\obj\Debug\test.fsprojResolveAssemblyReference.cache
+C:\users\николай\desktop\pr\src\test\obj\Debug\test.dll
+C:\users\николай\desktop\pr\src\test\obj\Debug\test.pdb

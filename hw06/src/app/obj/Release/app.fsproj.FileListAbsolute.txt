@@ -1,0 +1,7 @@
+C:\users\николай\desktop\pr\build\app.exe.config
+C:\users\николай\desktop\pr\build\app.exe
+C:\users\николай\desktop\pr\build\app.pdb
+C:\users\николай\desktop\pr\build\app.XML
+C:\users\николай\desktop\pr\src\app\obj\Release\app.fsprojResolveAssemblyReference.cache
+C:\users\николай\desktop\pr\src\app\obj\Release\app.exe
+C:\users\николай\desktop\pr\src\app\obj\Release\app.pdb
