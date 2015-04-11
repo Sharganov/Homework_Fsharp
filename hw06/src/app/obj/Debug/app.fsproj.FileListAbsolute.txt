@@ -1,7 +1,0 @@
-C:\users\николай\desktop\pr\test\app.exe.config
-C:\users\николай\desktop\pr\test\app.exe
-C:\users\николай\desktop\pr\test\app.pdb
-C:\users\николай\desktop\pr\test\app.XML
-C:\users\николай\desktop\pr\src\app\obj\Debug\app.fsprojResolveAssemblyReference.cache
-C:\users\николай\desktop\pr\src\app\obj\Debug\app.exe
-C:\users\николай\desktop\pr\src\app\obj\Debug\app.pdb

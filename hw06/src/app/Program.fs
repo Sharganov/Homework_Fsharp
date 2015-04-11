@@ -18,6 +18,7 @@ let main argv =
   else 
     use input = new StreamReader (argv.[0])
     let t  = input.ReadToEnd()
+    printfn "%s" t
     let res = run (norm t)
     if (argv.Length>1) then
       let output = new StreamWriter (argv.[1])
