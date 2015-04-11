@@ -99,8 +99,9 @@ let getval (s:Token) =
   match s with 
   |Oper(x) -> x
   |_-> 'N'
-let ToPostfix (fn:string) =
-  use ostream = new StreamWriter "otest.txt"
+
+let ToPostfix (fn:string) (out:string) =
+  use ostream = new StreamWriter (out)
   let str = ReadFrom fn
   let mutable tlist = parse str
   let mutable stack = new Stack<Token>()
@@ -153,7 +154,7 @@ let stackmachine (fn : string) =
     |_ -> 
           ignore(stack.push (System.Convert.ToDouble str))
   outstream.Write (stack.top().Value)
-
+[<TestCase ("1-2-3", Result = -4.0)>]
 [<TestCase ("3^1^2", Result = 3.0)>]
 [<TestCase ("2+2*2", Result = 6.0)>]
 [<TestCase ("3-(-2)", Result = 5.0)>]
@@ -162,18 +163,21 @@ let stackmachine (fn : string) =
 [<TestCase ("19+(2%4)^2", Result = 23.0)>]
 [<TestCase ("(19+18*(2+6)/3^2)%4", Result = 3.0)>]
 [<TestCase ("(3+4)^2-(5-7)^3", Result = 57.0)>]
+
 let test value = 
+  let str = "otest.txt"
   WriteTo "test.txt" value 
-  ToPostfix "test.txt"
-  stackmachine "otest.txt"
+  ToPostfix "test.txt" str
+  stackmachine str
   let str = ReadFrom "result.txt"
   System.Convert.ToDouble str
 
 [<TestCase ("4/2", Result = "4\r\n2\r\n/\r\n")>]
 let test01 value = 
+  let str = "otest.txt"
   WriteTo "test.txt" value 
-  ToPostfix "test.txt"
-  let str = ReadFrom "otest.txt"
+  ToPostfix "test.txt" str
+  let str = ReadFrom str
   str
 
 [<EntryPoint>]
