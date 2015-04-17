@@ -1,0 +1,7 @@
+D:\F#\home\Николай\hw07\build\arithmetic.exe.config
+D:\F#\home\Николай\hw07\build\arithmetic.exe
+D:\F#\home\Николай\hw07\build\arithmetic.pdb
+D:\F#\home\Николай\hw07\build\arithmetic.XML
+D:\F#\home\Николай\hw07\src\app\obj\Release\app.fsprojResolveAssemblyReference.cache
+D:\F#\home\Николай\hw07\src\app\obj\Release\arithmetic.exe
+D:\F#\home\Николай\hw07\src\app\obj\Release\arithmetic.pdb

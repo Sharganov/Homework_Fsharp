@@ -1,0 +1,10 @@
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\arithmetic.XML
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\obj\Debug\app.fsprojResolveAssemblyReference.cache
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\obj\Debug\arithmetic.exe
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\obj\Debug\arithmetic.pdb
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\arithmetic.exe.config
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\arithmetic.exe
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\arithmetic.pdb
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\FSharp.Core.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\FSharp.Core.xml
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\arithmetic\bin\Debug\ru\FSharp.Core.resources.dll

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "app", "arithmetic\app.fsproj", "{FB456ACF-775D-4118-A5EB-B40CF9DBD756}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "test", "test\test.fsproj", "{9601EEC3-1B21-4421-9C06-97E5EC11629F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB456ACF-775D-4118-A5EB-B40CF9DBD756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB456ACF-775D-4118-A5EB-B40CF9DBD756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB456ACF-775D-4118-A5EB-B40CF9DBD756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB456ACF-775D-4118-A5EB-B40CF9DBD756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9601EEC3-1B21-4421-9C06-97E5EC11629F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9601EEC3-1B21-4421-9C06-97E5EC11629F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9601EEC3-1B21-4421-9C06-97E5EC11629F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9601EEC3-1B21-4421-9C06-97E5EC11629F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

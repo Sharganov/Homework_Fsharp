@@ -1,0 +1,20 @@
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\obj\Debug\test.fsprojResolveAssemblyReference.cache
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\test.XML
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\test.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\test.pdb
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\arithmetic.exe
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\FSharp.Core.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\nunit.framework.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\arithmetic.pdb
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\arithmetic.xml
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\FSharp.Core.xml
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\nunit.framework.xml
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\bin\Debug\ru\FSharp.Core.resources.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\obj\Debug\test.dll
+C:\Users\Николай\Documents\Visual Studio 2012\Projects\hw07\test\obj\Debug\test.pdb
+D:\F#\home\Николай\hw07\test\test.dll
+D:\F#\home\Николай\hw07\test\test.pdb
+D:\F#\home\Николай\hw07\test\test.XML
+D:\F#\home\Николай\hw07\src\test\obj\Debug\test.fsprojResolveAssemblyReference.cache
+D:\F#\home\Николай\hw07\src\test\obj\Debug\test.dll
+D:\F#\home\Николай\hw07\src\test\obj\Debug\test.pdb
