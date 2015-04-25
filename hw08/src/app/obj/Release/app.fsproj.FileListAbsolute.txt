@@ -1,0 +1,7 @@
+D:\F#\home\Николай\hw08\build\app.exe.config
+D:\F#\home\Николай\hw08\build\app.exe
+D:\F#\home\Николай\hw08\build\app.pdb
+D:\F#\home\Николай\hw08\build\app.XML
+D:\F#\home\Николай\hw08\src\app\obj\Release\app.fsprojResolveAssemblyReference.cache
+D:\F#\home\Николай\hw08\src\app\obj\Release\app.exe
+D:\F#\home\Николай\hw08\src\app\obj\Release\app.pdb
