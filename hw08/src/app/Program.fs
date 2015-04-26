@@ -1,5 +1,5 @@
 ﻿open System.Windows.Forms 
-open Calculator
+open SCalculator
 let mutable expr = ""
 let coor n = 
   match n with
@@ -25,8 +25,10 @@ let coor2 n =
   |"="-> (154,120)
   |"("-> (308, 30)
   |")"-> (308, 60)
-
-
+  |"sin" ->(385, 60)
+  |"cos" -> (385, 90)
+  |"^" -> (308, 90)
+  |"," -> (308, 120)
 let list = [] 
 let programLabel =
   let lbl = new Label()
@@ -34,6 +36,15 @@ let programLabel =
   lbl.AutoSize <- true
   lbl
 
+let PiNumber =
+  let but = new Button()
+  but.Text <-System.Math.PI.ToString()
+  but.Location <- System.Drawing.Point (385, 30)
+  but.Click.Add (fun e ->
+    expr <- expr + but.Text
+    programLabel.Text  <- expr
+    )
+  but
 
 let NumberButton n = 
   let but = new Button()
@@ -42,8 +53,7 @@ let NumberButton n =
   but.Location <- System.Drawing.Point (fst c, snd c)
   but.Click.Add  (fun e ->  
     expr <- expr + n.ToString() 
-    programLabel.Text <- 
-      stack.print + expr
+    programLabel.Text <- expr
     )
   but
 
@@ -53,26 +63,62 @@ let OperButton n =
   let c = coor2 n
   but.Location <- System.Drawing.Point (fst c, snd c)
   but.Click.Add  (fun e -> 
-    if n = "=" then 
-      let res = calculator expr [] 
+    match n with 
+    | "=" -> 
+      try
+        expr <- (calculator expr).ToString()  
+      with 
+       |NoRightRb -> expr <- "No right bracket!\nPress C and try again"
+       |_ -> expr <- "Invalid expressoin\nPress C and try again"
       programLabel.Text  <-
-        sprintf "%f" res
-      expr <- ""
-    else
-      expr <- expr + n
-      programLabel.Text <-
-         stack.print + expr
+        sprintf "%s" expr
+    | "sin" -> 
+       expr <- (System.Math.Sin (calculator expr)).ToString()
+       programLabel.Text  <-
+        sprintf "%s" expr
+    | "cos" ->
+       expr <- (System.Math.Cos (calculator expr)).ToString()
+       programLabel.Text  <-
+        sprintf "%s" expr
+    |"-" -> 
+      if expr.Length > 0 && expr.[expr.Length - 1] = '(' then 
+         expr <- expr + " " + n           
+      else
+         expr <- expr + " " + n + " "
+      programLabel.Text <- expr
+    | "," ->
+       expr <- expr + n 
+       programLabel.Text <- expr
+    | _ ->
+      expr <- expr + " " + n + " "
+      programLabel.Text <- expr
     )
   but
-let BraketButton n = 
+
+let BraketButton (n:string) = 
   let but = new Button()
   but.Text <- n.ToString()
-  let c = coor n
+  let c = coor2 n
   but.Location <- System.Drawing.Point (fst c, snd c)
   but.Click.Add  (fun e ->  
-    expr <- expr + n.ToString() 
-    programLabel.Text <- 
-      stack.print + expr
+    match n with 
+    | ")" ->
+      expr <- expr + " " + n.ToString() 
+      programLabel.Text <-  sprintf "%s" expr
+    | "(" -> 
+      expr <- expr +  n.ToString() + " "
+      programLabel.Text <-  sprintf "%s" expr
+    )
+  but
+ 
+let clean1Button = 
+  let but = new Button()
+  but.Text <- "<-"
+  but.Location <- System.Drawing.Point (308, 0)
+  but.Click.Add (fun _ ->
+    if (expr.Length > 0 ) then 
+      expr <- expr.[0..expr.Length - 2]
+      programLabel.Text <- sprintf "%s" expr
     )
   but
 let CleanButton =
@@ -82,10 +128,8 @@ let CleanButton =
   but.Click.Add (fun _ ->
     expr <- ""
     programLabel.Text <- sprintf "%s" ""
-    stack.Empty
     )
   but
-
 let exitButton (form: Form) = 
   let but = new Button()
   but.Text <- "Exit"
@@ -98,19 +142,24 @@ let mainForm  =
   let form = new Form(Visible = false)
   form.Controls.Add (exitButton(form))
   form.Controls.Add (CleanButton)
-  let list = ["+"; "-"; "*"; "/"; "=";"(";")"]
+  form.Controls.Add (clean1Button)
+  form.Controls.Add (PiNumber)
+  let list = ["+"; "-"; "*"; "/"; "=";"sin";"cos";"^";","]
+  let list2 = ["(";")"]
   let dislist = [(0,0);(0,30)]
   form.Controls.Add (programLabel)
   for i = 0 to 9 do 
     form.Controls.Add (NumberButton(i))
   for i in list do 
     form.Controls.Add (OperButton(i))
+  for i in list2 do 
+    form.Controls.Add (BraketButton(i))
   form
 
 [<EntryPoint>]
 
 let main argv = 
-    mainForm.Visible <- true 
+    mainForm.Visible <- true
     Application.Run()
     printfn "%s" expr
     0 

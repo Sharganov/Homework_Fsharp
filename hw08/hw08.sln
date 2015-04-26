@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B06A2713-94C4-48A8-9969-8CE41D037BED}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "app", "src\app\app.fsproj", "{71934AD0-2445-4A25-B212-1D118B3570A7}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "test", "src\test\test.fsproj", "{838EEAF4-1815-44C3-B1B7-6EAECD32D63D}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "app", "src\app\app.fsproj", "{77C99C64-42C9-4F9D-87A5-C400130B65C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,20 +13,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{71934AD0-2445-4A25-B212-1D118B3570A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71934AD0-2445-4A25-B212-1D118B3570A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71934AD0-2445-4A25-B212-1D118B3570A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71934AD0-2445-4A25-B212-1D118B3570A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{838EEAF4-1815-44C3-B1B7-6EAECD32D63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{838EEAF4-1815-44C3-B1B7-6EAECD32D63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{838EEAF4-1815-44C3-B1B7-6EAECD32D63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{838EEAF4-1815-44C3-B1B7-6EAECD32D63D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C99C64-42C9-4F9D-87A5-C400130B65C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C99C64-42C9-4F9D-87A5-C400130B65C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C99C64-42C9-4F9D-87A5-C400130B65C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C99C64-42C9-4F9D-87A5-C400130B65C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{71934AD0-2445-4A25-B212-1D118B3570A7} = {B06A2713-94C4-48A8-9969-8CE41D037BED}
 		{838EEAF4-1815-44C3-B1B7-6EAECD32D63D} = {B06A2713-94C4-48A8-9969-8CE41D037BED}
+		{77C99C64-42C9-4F9D-87A5-C400130B65C7} = {B06A2713-94C4-48A8-9969-8CE41D037BED}
 	EndGlobalSection
 EndGlobal

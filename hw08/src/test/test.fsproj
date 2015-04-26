@@ -50,9 +50,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\app\app.fsproj">
-      <Name>app</Name>
-      <Project>{71934ad0-2445-4a25-b212-1d118b3570a7}</Project>
+      <Name>app (src\app)</Name>
+      <Project>{77c99c64-42c9-4f9d-87a5-c400130b65c7}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

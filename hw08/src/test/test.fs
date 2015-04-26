@@ -1,5 +1,5 @@
 ﻿module test
-open Calculator
+open SCalculator
 open NUnit.Framework
 
 [<TestCase ("1-2-3", Result = -4.0)>]
@@ -12,5 +12,5 @@ open NUnit.Framework
 [<TestCase ("(19+18*(2+6)/3^2)%4", Result = 3.0)>]
 [<TestCase ("(3+4)^2-(5-7)^3", Result = 57.0)>]
 let test value = 
-  calculator value []
+  calculator value 
   
