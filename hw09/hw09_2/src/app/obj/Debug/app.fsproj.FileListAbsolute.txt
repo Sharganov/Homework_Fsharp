@@ -1,0 +1,10 @@
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\app.exe.config
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\app.XML
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\app.exe
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\app.pdb
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\FSharp.Core.dll
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\FSharp.Core.xml
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\bin\Debug\ru\FSharp.Core.resources.dll
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\obj\Debug\app.fsprojResolveAssemblyReference.cache
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\obj\Debug\app.exe
+c:\Users\Николай\documents\visual studio 2012\Projects\hw09_2\src\app\obj\Debug\app.pdb
