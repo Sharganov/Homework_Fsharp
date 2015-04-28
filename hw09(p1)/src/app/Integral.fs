@@ -69,7 +69,7 @@ let integral f (l:float) r threadNum  =
 
 [<EntryPoint>]
 let main argv =  
-    if (argv.Length > 4) then printfn "Not Enough arguments"
+    if (argv.Length < 4) then printfn "Not Enough arguments"
     else
       printfn "%f" (integral argv.[0] (float argv.[1]) (float argv.[2]) (int argv.[3]))
     0 
