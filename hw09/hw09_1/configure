@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Downloading NuGet"
+curl -L http://nuget.org/nuget.exe -o NuGet.exe
+chmod +x NuGet.exe
+echo "Downloading FAKE..."
+nuget Install FAKE -OutputDirectory packages -ExcludeVersion
+chmod +x packages/FAKE/tools/FAKE.exe
+nuget Install NUnit.Runners -OutputDirectory packages -ExcludeVersion
