@@ -1,8 +1,9 @@
-﻿module Program
-open System.Threading
+module Program
 open Calculator 
+open System.Threading
 let square (a:float) b h  =  (a+b)*h/2.0
 
+let spliting = 5000000//"частота" разбиения
 
 (*
 Функции integal1 и count1 не дают преимущество во времени  при данном воде,
@@ -12,9 +13,9 @@ let square (a:float) b h  =  (a+b)*h/2.0
 *)
 
 let count1 (l:float) r f  = 
-  let step = (r - l)/float 10000000
+  let step = (r - l)/float spliting
   let mutable res = 0.0
-  for i= 0 to 10000000 do 
+  for i= 0 to spliting do 
     let v1 = calculator f (l + (float i)*step)
     let v2 = calculator f (l + float((i+1))*step)
     res <- res + square v1 v2 step
@@ -53,7 +54,7 @@ let integral f (l:float) r threadNum  =
   let step = (r - l)/ float threadNum
   let threadArray = Array.init threadNum (fun i ->
     new Thread(ThreadStart(fun _ ->
-    let threadRes = count (l + (float i)*step) (l+float(i+1)*step) f (10000/threadNum)
+    let threadRes = count (l + (float i)*step) (l+float(i+1)*step) f (spliting/threadNum)
     Monitor.Enter(res)
     res := res.Value + threadRes 
     Monitor.Exit(res)
@@ -65,8 +66,6 @@ let integral f (l:float) r threadNum  =
     i.Join()
   res.Value
      
-  
-
 [<EntryPoint>]
 let main argv =  
     if (argv.Length < 4) then printfn "Not Enough arguments"
