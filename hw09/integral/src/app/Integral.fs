@@ -3,7 +3,7 @@ open Calculator
 open System.Threading
 let square (a:float) b h  =  (a+b)*h/2.0
 
-let spliting = 5000000//"частота" разбиения
+let spliting = 1000000//"сила" разбиения отрезка
 
 (*
 Функции integal1 и count1 не дают преимущество во времени  при данном воде,
@@ -55,9 +55,7 @@ let integral f (l:float) r threadNum  =
   let threadArray = Array.init threadNum (fun i ->
     new Thread(ThreadStart(fun _ ->
     let threadRes = count (l + (float i)*step) (l+float(i+1)*step) f (spliting/threadNum)
-    Monitor.Enter(res)
-    res := res.Value + threadRes 
-    Monitor.Exit(res)
+    lock res (fun _ -> res := res.Value + threadRes)
       ))
     )
   for i in threadArray do 
